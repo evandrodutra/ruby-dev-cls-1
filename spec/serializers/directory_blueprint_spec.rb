@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe DirectoryBlueprint do
   let(:root) { create(:directory, name: 'Root') }
-  
+
   before do
     root.files.attach(
       io: StringIO.new('test content'),
@@ -31,7 +31,7 @@ RSpec.describe DirectoryBlueprint do
 
     context 'with subdirectories' do
       let!(:child) { create(:directory, name: 'Child', parent: root) }
-      
+
       it 'includes depth information' do
         tree = JSON.parse(DirectoryBlueprint.render(Directory.find(root.id)))
 
@@ -40,4 +40,4 @@ RSpec.describe DirectoryBlueprint do
       end
     end
   end
-end 
+end

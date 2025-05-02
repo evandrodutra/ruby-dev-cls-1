@@ -9,10 +9,10 @@ RSpec.describe DirectoriesController, type: :controller do
     it 'returns all root directories' do
       get :index
       json_response = JSON.parse(response.body)
-      
+
       expect(response).to have_http_status(:success)
       expect(json_response.size).to eq(2)
-      expect(json_response.map { |d| d['name'] }).to match_array(['Root1', 'Root2'])
+      expect(json_response.map { |d| d['name'] }).to match_array([ 'Root1', 'Root2' ])
     end
   end
 
@@ -29,17 +29,17 @@ RSpec.describe DirectoriesController, type: :controller do
         "id" => root.id,
         "files_data" => [],
         "name" => "Root",
-        "subdirectories" => [{
+        "subdirectories" => [ {
           "id" => child.id,
           "files_data" => [],
           "name" => "Child",
-          "subdirectories" => [{
+          "subdirectories" => [ {
             "id" => subchild.id,
             "files_data" => [],
             "name" => "SubChild",
             "subdirectories" => []
-          }]
-        }]
+          } ]
+        } ]
       })
     end
   end
@@ -48,7 +48,7 @@ RSpec.describe DirectoriesController, type: :controller do
     let!(:root) { create(:directory, name: 'Root') }
     let!(:child) { create(:directory, name: 'Child', parent: root) }
 
-    it 'deletes the directory and its children' do   
+    it 'deletes the directory and its children' do
       expect {
         delete :destroy, params: { id: root.id }
       }.to change(Directory, :count).by(-2)
@@ -61,8 +61,8 @@ RSpec.describe DirectoriesController, type: :controller do
 
     it 'returns not found if directory does not exist' do
       delete :destroy, params: { id: 999 }
-      
+
       expect(response).to have_http_status(:not_found)
-    end 
+    end
   end
-end 
+end

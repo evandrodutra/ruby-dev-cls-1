@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :directory do
     sequence(:name) { |n| "Directory#{n}" }
-    
+
     trait :with_parent do
       association :parent, factory: :directory
     end
@@ -16,4 +16,4 @@ FactoryBot.define do
       end
     end
   end
-end 
+end

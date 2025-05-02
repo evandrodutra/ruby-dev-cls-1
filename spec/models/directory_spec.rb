@@ -9,7 +9,7 @@ RSpec.describe Directory, type: :model do
 
   describe 'validations' do
     it { should validate_presence_of(:name) }
-    
+
     describe 'name uniqueness' do
       subject { create(:directory) }
       it { should validate_uniqueness_of(:name).scoped_to(:parent_id) }
@@ -23,25 +23,25 @@ RSpec.describe Directory, type: :model do
       let!(:child) { create(:directory, name: 'Child', parent: root1) }
 
       it 'returns only root directories' do
-        expect(Directory.roots).to match_array([root1, root2])
+        expect(Directory.roots).to match_array([ root1, root2 ])
       end
 
       it 'returns roots ordered by name' do
-        expect(Directory.roots.to_a).to eq([root1, root2])
+        expect(Directory.roots.to_a).to eq([ root1, root2 ])
       end
     end
   end
 
   describe 'file attachments' do
     let(:directory) { create(:directory) }
-    
+
     it 'can attach multiple files' do
       directory.files.attach(
         io: StringIO.new('test content 1'),
         filename: 'test1.txt',
         content_type: 'text/plain'
       )
-      
+
       directory.files.attach(
         io: StringIO.new('test content 2'),
         filename: 'test2.txt',
@@ -52,4 +52,4 @@ RSpec.describe Directory, type: :model do
       expect(directory.files.count).to eq(2)
     end
   end
-end 
+end

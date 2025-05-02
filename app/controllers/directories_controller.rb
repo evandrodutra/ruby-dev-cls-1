@@ -21,7 +21,7 @@ class DirectoriesController < ApplicationController
   def destroy
     directory = Directory.find(params[:id])
     directory.destroy
-    render json: { message: 'Directory deleted successfully' }, status: :ok
+    render json: { message: "Directory deleted successfully" }, status: :ok
   end
 
   private
