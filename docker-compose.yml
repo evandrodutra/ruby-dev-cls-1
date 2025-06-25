@@ -1,0 +1,31 @@
+services:
+  postgresql:
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: always
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    command: bash -c "bundle install && ./bin/thrust ./bin/rails server -b 0.0.0.0 -p 1234"
+    depends_on:
+      - postgresql
+    links:
+      - postgresql:postgresql
+    ports:
+      - 1234:1234
+    volumes:
+      - ./:/app
+    environment:
+      - DB_HOST=postgresql
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=postgres
+
+volumes:
+  postgres_data:
